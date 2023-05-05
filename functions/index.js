@@ -2,13 +2,12 @@ import functions from "firebase-functions";
 import express from "express";
 import cors from "cors";
 
-// import addUser.js
-
+import { export_account } from "../src/adduser";
 
 const app = express();
 app.use(cors())
 app.use(express.json())
 
-app.post('/account-exports', )
+app.post('/account-exports', export_account)
 
 export const api = functions.https.onRequest(app);
