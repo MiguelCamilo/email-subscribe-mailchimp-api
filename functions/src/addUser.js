@@ -1,35 +1,31 @@
-import client from '@mailchimp/mailchimp_marketing';
-import { apiKey } from '../env.js';
+import mailchimp from '@mailchimp/mailchimp_marketing';
+const { apiKey } = require('../env.js');
 
-client.setConfig({
+
+mailchimp.setConfig({
 	apiKey: apiKey.key,
 	server: apiKey.server,
+  listId: apiKey.listId,
 });
 
-export const export_account = async (req, res) => {
-	const firstName = req.body.firstName;
-	const lastName = req.body.lastName;
-	const email = req.body.email;
-	const listId = apiKey.listId;
+export const export_account = ('/', (req, res) => {
 
-	const userData = {
-		firstName,
-		lastName,
-		email,
-	};
+  const { firstname, lastname, email } = req.body;
 
-	try {
-		const response = await client.accountExports.createAccountExport(listId, {
+  
+	// async func that is uploading the data to the server
+	// from mail chimp API doc's
+	const run = async () => {
+		const response = await mailchimp.lists.addListMember(listId, {
 			email_address: userData.email,
-			include_stages: '[subscribed]',
+			status: 'subscribed',
 			merge_fields: {
 				FNAME: userData.firstName,
 				LNAME: userData.lastName,
 			},
 		});
-
-		res.status(200).send({ message: response });
-	} catch (error) {
-		res.status(500).send({ message: error.message });
-	}
-};
+		// after form is submitted this here sends the user to the success page
+		console.log(`Contact Added Successfully!`);
+	};
+	run().catch((e) => console.log(e));
+});
