@@ -11,9 +11,9 @@ export const export_account = async (req, res) => {
   const { firstname, lastname, email } = req.body;
   const list_id = "76f5877f0b";
 
-  // if(!firstname || !lastname || !email) {
-  //   return res.status(400).send({ message: "missing required fields" })
-  // }
+  if(!firstname || !lastname || !email) {
+    return res.status(400).send({ message: "missing required fields" })
+  }
 
 	try {
 		const response = await client.lists.addListMember(list_id, {
@@ -25,8 +25,9 @@ export const export_account = async (req, res) => {
       },
     });
     res.status(200).send({ message: "success", data: response})
+    // console.log(response)
 	} catch (error) {
-    res.sendStatus(500)
+    res.status(500).send({ message: "error" })
     console.log(error)
 	}
 };
