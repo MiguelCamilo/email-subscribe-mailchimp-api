@@ -32,7 +32,7 @@ Clone the repo:
 POST
 /lists/{list_id}/members
 
-```http
+```bash
 // import client from "@mailchimp/mailchimp_marketing";
 const client = require("@mailchimp/mailchimp_marketing");
 
