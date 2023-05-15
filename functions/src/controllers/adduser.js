@@ -1,8 +1,6 @@
 import client from '@mailchimp/mailchimp_marketing';
 
 import { apiKey } from '../../env.js';
-import { checkUserExists } from './getuser.js';
-
 
 client.setConfig({
 	apiKey: apiKey.key,
